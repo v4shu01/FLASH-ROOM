@@ -751,8 +751,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
 
   <script>
-    const appID = 927960764;
-    const serverSecret = "ae69f441dadbf65f371a5f3eadb798d7";
+    const appID = 927990764;
+    const serverSecret = "ae69f441dadbf85f37fa5f3eadb788d7";
 
     let currentUser = "";
     let currentUserId = "u_" + Math.random().toString(36).substring(2, 10);
@@ -1169,12 +1169,16 @@
         overlay.style.display = "flex";
 
         const isVideo = mode === "video";
+        const safeRoomID = ("r_" + secretChannelKey).replace(/[^a-zA-Z0-9_]/g, "").slice(0, 20);
+        const safeUserID = currentUserId.replace(/[^a-zA-Z0-9_]/g, "").slice(0, 16);
+        const safeUserName = (currentUser || "Member").replace(/[^a-zA-Z0-9_ ]/g, "").trim() || "Member";
+
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-          appID,
-          serverSecret,
-          secretChannelKey,
-          currentUserId,
-          currentUser
+          Number(appID),
+          String(serverSecret).trim(),
+          safeRoomID,
+          safeUserID,
+          safeUserName
         );
 
         zpInstance = ZegoUIKitPrebuilt.create(kitToken);
